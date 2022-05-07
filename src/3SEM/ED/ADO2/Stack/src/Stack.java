@@ -24,13 +24,17 @@ public class Stack {
             return true;
 
         if(_current.getBackElement() == null)
+        {
             _start = null;
+        }
+        else
+        {
+            _support = _current.getBackElement();
+            _support.setNextElement(null);
+            _current.setBackElement(null);
 
-        _support.setNextElement(null);
-        _support = _current.getBackElement();
-        _current.setBackElement(null);
-
-        _current = _support;
+            _current = _support;
+        }
 
         return true;
     }
