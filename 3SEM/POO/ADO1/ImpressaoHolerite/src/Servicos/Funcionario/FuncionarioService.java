@@ -45,34 +45,81 @@ public class FuncionarioService implements IFuncionarioService
             if(funcionario.getDescontoCalculado())
                 continue;
 
-            double salarioBruto = funcionario.getSalarioBruto();
+            descontarConvenio(funcionario);
+            descontarValeTransporte(funcionario);
+            descontarValeRefeicao(funcionario);
+            descontarValeAlimentacao(funcionario);
+            descontarIRPF(funcionario);
+            descontarINSS(funcionario);
+            descontarINSS(funcionario);
 
-            double descontoConvenio = new ConvenioDescontoService().obterValorASerDescontado(salarioBruto);
-            double descontoTransporte = new ValeTransporteDescontoService().obterValorASerDescontado(funcionario);
-            double descontoRefeicao = new ValeRefeicaoDescontoService().obterValorASerDescontado(salarioBruto);
-            double descontoAlimentacao = new ValeAlimentacaoDescontoService().obterValorASerDescontado(salarioBruto);
-            double descontoIRPF = new IRPFDescontoService().obterValorASerDescontado(salarioBruto);
-            double descontoINSS = new INSSDescontoService().obterValorASerDescontado(salarioBruto - descontoIRPF);
-
-            funcionario.descontarDoSalario(descontoConvenio);
-            funcionario.descontarDoSalario(descontoTransporte);
-            funcionario.descontarDoSalario(descontoRefeicao);
-            funcionario.descontarDoSalario(descontoAlimentacao);
-            funcionario.descontarDoSalario(descontoIRPF);
-            funcionario.descontarDoSalario(descontoINSS);
-
-            funcionario.setDescontoConvenio(descontoConvenio);
-            funcionario.setDescontoTransporte(descontoTransporte);
-            funcionario.setDescontoRefeicao(descontoRefeicao);
-            funcionario.setDescontoAlimentacao(descontoAlimentacao);
-            funcionario.setDescontoIRPF(descontoIRPF);
-            funcionario.setDescontoINSS(descontoINSS);
-
-            funcionario.adicionarBonusAoSalario();
-
-            funcionario.setDescontoCalculado(true);
+            aplicarBonusAoSalario(funcionario);
         }
 
         return _funcionarios;
+    }
+
+    private void descontarConvenio(Funcionario funcionario){
+        var descontoService = new ConvenioDescontoService();
+
+        double salarioBruto = funcionario.getSalarioBruto();
+        double desconto = descontoService.obterValorASerDescontado(salarioBruto);
+
+        funcionario.descontarDoSalario(desconto);
+        funcionario.setDescontoConvenio(desconto);
+    }
+
+    private void descontarValeTransporte(Funcionario funcionario){
+        var valeTransporteService = new ValeTransporteDescontoService();
+        double desconto = valeTransporteService.obterValorASerDescontado(funcionario);
+
+        funcionario.descontarDoSalario(desconto);
+        funcionario.setDescontoTransporte(desconto);
+    }
+
+    private void descontarValeRefeicao(Funcionario funcionario){
+        var valeRefeicaoService = new ValeRefeicaoDescontoService();
+
+        double salarioBruto = funcionario.getSalarioBruto();
+        double desconto = valeRefeicaoService.obterValorASerDescontado(salarioBruto);
+
+        funcionario.descontarDoSalario(desconto);
+        funcionario.setDescontoRefeicao(desconto);
+    }
+
+    private void descontarValeAlimentacao(Funcionario funcionario){
+        var valeAlimentacaoService = new ValeAlimentacaoDescontoService();
+
+        double salarioBruto = funcionario.getSalarioBruto();
+        double desconto = valeAlimentacaoService.obterValorASerDescontado(salarioBruto);
+
+        funcionario.descontarDoSalario(desconto);
+        funcionario.setDescontoAlimentacao(desconto);
+    }
+
+    private void descontarIRPF(Funcionario funcionario){
+        var IRPFService = new IRPFDescontoService();
+
+        double salarioBruto = funcionario.getSalarioBruto();
+        double desconto = IRPFService.obterValorASerDescontado(salarioBruto);
+
+        funcionario.descontarDoSalario(desconto);
+        funcionario.setDescontoIRPF(desconto);
+    }
+
+    private void descontarINSS(Funcionario funcionario){
+        var INSSService = new INSSDescontoService();
+
+        double salarioBruto = funcionario.getSalarioBruto();
+        double salarioADescontar = salarioBruto - funcionario.getDescontoINSS();
+        double desconto = INSSService.obterValorASerDescontado(salarioADescontar);
+
+        funcionario.descontarDoSalario(desconto);
+        funcionario.setDescontoINSS(desconto);
+    }
+
+    private void aplicarBonusAoSalario(Funcionario funcionario){
+        funcionario.adicionarBonusAoSalario();
+        funcionario.setDescontoCalculado(true);
     }
 }
