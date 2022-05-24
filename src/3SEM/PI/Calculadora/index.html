@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+    <html lang="pt-br">
+    <!-- Doctype informa ao agente de usuario a versão do html que deve ser renderizada -->
+
+    <head>
+        <title> pagina de exemplo estrutura basica </title>
+        <meta charset="utf-8">
+        <meta name="author" content="Vinícius">
+        <meta name="description" content=" lista de documentos">
+        <meta name="keywords" content="html5, tecnologia">
+
+        <link rel="stylesheet" href="index.css">
+
+        </script>
+
+    </head>
+
+    <body>
+
+        <div class="fundo-image">
+
+            <div class="teclado">
+
+                <div class="calculos">
+
+                    <table>
+                        <p id="rezutado"> </p>
+                        <tr>
+                            <td class="calc"> <button onclick="potenciacao()" style="width: 100px; height: 50px;"> <b> <i>
+                                            POT </i> </b> </button> </td>
+                            <!-- potencia -->
+                            <td class="calc"> <button onclick="arrendodador()" style="width: 100px; height: 50px;"> <b> <i>
+                                            ARRE </i> </b> </button> </td>
+                            <!-- Arredondar -->
+                            <td class="calc"> <button onclick="raiz()" style="width: 100px; height: 50px;"> <b> <i> RAIZ
+                                        </i> </b> </button> </td>
+                            <!-- Raiz -->
+                            <td class="calc"> <button onclick="maximo()" style="width: 100px; height: 50px;"> <b> <i> MAX
+                                        </i> </b> </button> </td>
+                            <!-- Maximo numero -->
+                        </tr>
+
+                        <tr>
+                            <td class="calc"> <button onclick="memoria()"
+                                    style="width: 100px; height: 50px; margin-bottom: 10px;"> <b> <i> MRC </i> </b>
+                                </button></td>
+                            <td class="calc"> <button onclick="menor()"
+                                    style="width: 100px; height: 50px; margin-bottom: 10px;"> <b> <i> M- </i> </b> </button>
+                            </td>
+                            <td class="calc"> <button onclick="maior()"
+                                    style="width: 100px; height: 50px; margin-bottom: 10px;"> <b> <i> M+ </i> </b> </button>
+                            </td>
+                            <td class="calc"> <button onclick="clean()"
+                                    style="width: 100px; height: 50px; margin-bottom: 10px;"> <b> <i> CE </i> </b> </button>
+                            </td>
+                        </tr>
+
+                </div>
+
+                <br>
+
+                <div class="numeros">
+
+                    <tr>
+                        <td> <button onclick="clean()" style="width: 100px; height: 40px;"> <b> C </b> </button> </td>
+                        <td> <button onclick="back()" style="width: 100px; height: 40px;"> <b> < </b> </button> </td>
+                        <td> <button onclick="porcent()" style="width: 100px; height: 40px;"> <b> % </b> </button> </td>
+                        <td> <button onclick="insert('+')" style="width: 100px; height: 40px;"> <b> + </b> </button> </td>
+                    </tr>
+
+                    <tr>
+                        <td> <button onclick="insert('7')" style="width: 100px; height: 40px;"> <b> 7 </b> </button> </td>
+                        <td> <button onclick="insert('8')" style="width: 100px; height: 40px;"> <b> 8 </b> </button> </td>
+                        <td> <button onclick="insert('9')" style="width: 100px; height: 40px;"> <b> 9 </b> </button> </td>
+                        <td> <button onclick="insert('-')" style="width: 100px; height: 40px;"> <b> - </b> </button> </td>
+                    </tr>
+
+                    <tr>
+                        <td> <button onclick="insert('4')" style="width: 100px; height: 40px;"> <b> 4 </b> </button> </td>
+                        <td> <button onclick="insert('5')" style="width: 100px; height: 40px;"> <b> 5 </b> </button> </td>
+                        <td> <button onclick="insert('6')" style="width: 100px; height: 40px;"> <b> 6 </b> </button> </td>
+                        <td> <button onclick="insert('*')" style="width: 100px; height: 40px;"> <b> X </b> </button> </td>
+                    </tr>
+
+                    <tr>
+                        <td> <button onclick="insert('1')" style="width: 100px; height: 40px;"> <b> 1 </b> </button> </td>
+                        <td> <button onclick="insert('2')" style="width: 100px; height: 40px;"> <b> 2 </b> </button> </td>
+                        <td> <button onclick="insert('3')" style="width: 100px; height: 40px;"> <b> 3 </b> </button> </td>
+                        <td> <button onclick="insert('/')" style="width: 100px; height: 40px;"> <b> / </b> </button> </td>
+                    </tr>
+
+                    <tr>
+                        <td> <button onclick="insert('0')" style="width: 100px; height: 40px;"> <b> 0 </b> </button> </td>
+                        <td> <button onclick="insert('.')" style="width:100px ; height: 40px;"> <b> . </b> </button> </td>
+                        <td colspan="2"> <button onclick="calcular()" style=" width: 210px; height: 40px;"> <b> = </b>
+                            </button>
+                        </td>
+                    </tr>
+
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+        <script src="index.js"></script>
+    </body>
+
+    </html>

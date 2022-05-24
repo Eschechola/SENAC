@@ -1,9 +1,23 @@
 document.addEventListener("DOMContentLoaded", function (e) {
+    /* Variables */
+
     var expression = "";
     var hasOperator = false;
     const _buttons = document.getElementsByClassName("calculator-buttons-item");
     const _screen = document.getElementById("screen");
     const _numberButtons = [ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "comma" ];
+    const _memoryButtons = [ "mminus", "mplus", "mcr" ]
+
+    var enableMPlus = false;
+    var enableMMinus = false;
+
+    var mplusValue = 0;
+    var mminusValue = 0;
+
+    /* */
+
+
+    /* Start */
 
     const calculatorButtonClick = (button) => {
         const buttonId = button.target.id;
@@ -11,10 +25,37 @@ document.addEventListener("DOMContentLoaded", function (e) {
         buttonEvent(buttonId);
     }
 
+    const memoryButtonClick = (button) => {
+        const buttonId = button.target.id;
+
+        switch(buttonId)
+        {
+            case "mminus":
+                addMemoryMinus();
+                break;
+            
+            case "mplus":
+                addMemoryPlus();
+                break;
+
+            case "mcr":
+                clearMemory();
+                break;
+        }
+    }
+
     for (var i = 0; i < _buttons.length; i++) {
         const button = _buttons[i];
-        _buttons[i].addEventListener('click', calculatorButtonClick.bind(button), false);
+
+        if(_memoryButtons.includes(button.id))
+            _buttons[i].addEventListener('click', memoryButtonClick.bind(button), false);
+        else
+            _buttons[i].addEventListener('click', calculatorButtonClick.bind(button), false);
     }
+    
+    /* */
+
+    /* Methods */
 
     const changeScreenValue = (value) => _screen.innerHTML = value;
     
@@ -39,6 +80,46 @@ document.addEventListener("DOMContentLoaded", function (e) {
         resetScreenValue();
     }
 
+    const clearScreenAndMemory = () => {
+        clearMemory();
+        clearScreen();
+    }
+
+    const clearMemory = () => {
+        mminusValue = 0;
+        mplusValue = 0;
+        enableMMinus = false;
+        enableMPlus = false;
+    }
+
+    const addMemoryPlus = () => {
+        if(!enableMPlus)
+        {
+            mplusValue = expression;
+            enableMPlus = true;
+        }
+        else
+        {
+            expression += mplusValue;
+        }
+
+        changeScreenValue(expression);
+    }
+
+    const addMemoryMinus = () => {
+        if(!enableMMinus)
+        {
+            mminusValue = expression;
+            enableMMinus = true;
+        }
+        else
+        {
+            expression += mminusValue;
+        }
+
+        changeScreenValue(expression);
+    }
+
     const getOperatorByid = (operatorId) => {
         switch(operatorId){
             case "sum":
@@ -52,6 +133,24 @@ document.addEventListener("DOMContentLoaded", function (e) {
 
             case "divide":
                 return "/";
+
+            case "pot":
+                return "**";
+
+            case "raiz":
+                return "√";
+
+            case "arre":
+                return "≈";
+
+            case "mminus":
+                return "mminus";
+
+            case "mplus":
+                return "mplus";
+
+            case "percentage":
+                return "%";
         }
     }
 
@@ -67,8 +166,24 @@ document.addEventListener("DOMContentLoaded", function (e) {
     }
 
     const calculateExpression = () => {
-        const expressionResult = eval(expression);
-        expression = expressionResult;
+        if(expression.includes("√"))
+            expression = Math.sqrt(expression.replace("√", ""));
+        
+        else if(expression.includes("≈"))
+            expression = Math.round(expression.replace("≈", ""));
+
+        else if(expression.includes("M-"))
+            expression = expression.replace("M-", mminusValue);
+
+        else if(expression.includes("M+"))
+            expression = expression.replace("M+", mplusValue);
+
+        else if(expression.includes("%"))
+            expression = expression.split("%")[1] * (expression.split("%")[0] / 100);
+
+        else
+            expression = eval(expression);
+
         hasOperator = false;
 
         changeScreenValue(expression);
@@ -98,15 +213,24 @@ document.addEventListener("DOMContentLoaded", function (e) {
         if(_numberButtons.includes(buttonId))
             return addNumberToCalculation;
 
-        if(buttonId == "equals")
-            return calculateEquals;
+        switch(buttonId)
+        {
+            case "equals":
+                return calculateEquals;
 
-        if(buttonId == "c" || buttonId == "ce")
-            return clearScreen;
+            case "c":
+                return clearScreen;
 
-        if(buttonId == "backspace")
-            return erase;
+            case "ce":
+                return clearScreenAndMemory;
 
-        return addOperatorToCalculation;
+            case "backspace":
+                return erase;
+
+            default:
+                return addOperatorToCalculation;
+        }
     }
+
+    /* */
 });
