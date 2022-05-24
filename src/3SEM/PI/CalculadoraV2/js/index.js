@@ -181,6 +181,9 @@ document.addEventListener("DOMContentLoaded", function (e) {
         else if(expression.includes("%"))
             expression = expression.split("%")[1] * (expression.split("%")[0] / 100);
 
+        else if (expression.includes("/") && expression[expression.length -1] == 0)
+            expression = "Erro! Divisão p/ 0.";
+
         else
             expression = eval(expression);
 
