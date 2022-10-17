@@ -1,0 +1,31 @@
+*{
+    margin: 0;
+    border: 0;
+    padding: 0;
+}
+
+.container{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.alert{
+    width: 300px;
+    height: 90px;
+    border: none;
+    background: mediumseagreen;
+    color: white;
+    font-family: arial;
+    font-size: 1.3rem;
+    border-radius: 5px;
+    transition: .5s;
+}
+
+.alert:hover{
+    cursor: pointer;
+    background: rgb(23, 72, 45);
+    transition: .5s;
+}
