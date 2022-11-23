@@ -23,8 +23,13 @@ public class PersonService {
         return persons;
     }
 
-    public Person save(Person person){
+    public Person create(Person person){
+        person.setIsActive(true);
         return _personRepository.save(person);
+    }
+
+    public void delete(int id){
+        _personRepository.deleteById(id);
     }
 
     public Person update(int id, Person person){
@@ -36,7 +41,6 @@ public class PersonService {
         personToUpdate.setFirstName(person.getFirstName());
         personToUpdate.setLastName(person.getLastName());
         personToUpdate.setEmail(person.getEmail());
-        personToUpdate.setAge(person.getAge());
 
         return _personRepository.save(personToUpdate);
     }
