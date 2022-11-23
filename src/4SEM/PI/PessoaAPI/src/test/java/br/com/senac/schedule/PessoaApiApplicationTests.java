@@ -1,4 +1,4 @@
-package br.com.senac.pessoaapi;
+package br.com.senac.schedule;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
